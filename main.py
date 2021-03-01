@@ -1,32 +1,35 @@
 #!/usr/bin/python3
-import sys
-import asyncio
-import argparse
 import logging
 from web.client import Client
 
 logging.basicConfig(level=logging.INFO)
 
 
-def add_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--numeric', type=str, help='Numeric currency code')
-    parser.add_argument('--alpha', type=str, help='Alpha currency code')
+def app():
+    print('Choose currencies or skip:')
+    currencies = input()
+    print('Choose mode: file or remote:')
+    mode = input()
 
-    return parser
+    currencies = currencies.strip()
+    mode = mode.strip()
 
+    if mode not in ['file', 'remote']:
+        raise ValueError('Invalid mode')
 
-async def app():
-    parser = add_parser()
-    namespace = parser.parse_args(sys.argv[1:])
-    data = await Client().get_cur_base(numeric=namespace.numeric, alpha=namespace.alpha)
-    print(data)
+    if mode == 'file':
+        resp = Client(currencies=currencies).get_curr_from_file()
+    else:
+        print('Input date in format DD.MM.YYYY or skip:')
+        date = input()
+        resp = Client(currencies=currencies, date=date).get_curr_base()
+
+    print(resp)
 
 
 def main():
     try:
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(app())
+        app()
 
     except Exception as err:
         logging.error(err)
