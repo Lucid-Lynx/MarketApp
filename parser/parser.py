@@ -36,7 +36,7 @@ class Parser:
         data = {
             'date': self.get_current_date(),
             'currencies': {
-                match[1]: {
+                match[2]: {
                     'numeric_code': match[1],
                     'alpha_code': match[2],
                     'quantity': match[3],
@@ -47,7 +47,8 @@ class Parser:
             },
         }
 
-        return json.dumps(data, indent=4, ensure_ascii=False)
+        # return json.dumps(data, indent=4, ensure_ascii=False)
+        return data
 
     def get_current_date(self):
         pattern = re.compile(r' value="(\d{2}\.\d{2}\.\d{4})" ')
