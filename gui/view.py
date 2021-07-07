@@ -48,7 +48,7 @@ class View:
             available_targets = self.store.available_currencies.copy()
             available_targets.remove(self.base_cur)
 
-            return available_targets
+            return available_targets if len(available_targets) else [DEFAULT_BASE_CURRENCY]
 
         else:
             return [DEFAULT_BASE_CURRENCY]
