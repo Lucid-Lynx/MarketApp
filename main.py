@@ -1,12 +1,16 @@
 #!/usr/bin/python3
 import logging
+
+from decimal import getcontext
 # from web.client import Client
 from gui.gui import Gui
+from utility.config import PREC
 
 logging.basicConfig(level=logging.INFO)
 
 
 def app():
+    getcontext().prec = PREC
     Gui().run()
 
 
