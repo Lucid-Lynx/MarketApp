@@ -20,22 +20,22 @@ class Window(wx.Frame):
 
         self.label_base_cur = wx.StaticText(self.panel, label='Base currency', pos=(10, 15))
         self.choice_base_cur = wx.Choice(self.panel, choices=self.view.get_available_bases(), pos=(130, 10))
-        self.choice_base_cur.Bind(wx.EVT_CHOICE, self.__on_choice)
+        self.choice_base_cur.Bind(wx.EVT_CHOICE, self.__on_choice_currency)
         self.choice_base_cur.SetSelection(0)
 
         self.label_target_cur = wx.StaticText(self.panel, label='Target currency', pos=(10, 55))
         self.choice_target_cur = wx.Choice(self.panel, choices=self.view.get_available_targets(), pos=(130, 50))
-        self.choice_target_cur.Bind(wx.EVT_CHOICE, self.__on_choice)
+        self.choice_target_cur.Bind(wx.EVT_CHOICE, self.__on_choice_currency)
         self.choice_target_cur.SetSelection(0)
 
         self.label_mode = wx.StaticText(self.panel, label='Mode', pos=(10, 95))
         self.choice_mode = wx.Choice(self.panel, choices=['Remote', 'File'], pos=(130, 90))
-        self.choice_mode.Bind(wx.EVT_CHOICE, self.__on_choice)
+        self.choice_mode.Bind(wx.EVT_CHOICE, self.__on_choice_mode)
         self.choice_mode.SetSelection(0)
 
         self.label_date = wx.StaticText(self.panel, label='Date', pos=(10, 135))
         self.calendar_date = wx.adv.CalendarCtrl(self.panel, pos=(130, 130))
-        self.calendar_date.Bind(wx.adv.EVT_CALENDAR_SEL_CHANGED, self.__on_choice)
+        self.calendar_date.Bind(wx.adv.EVT_CALENDAR_SEL_CHANGED, self.__on_choice_date)
 
         self.button_rate = wx.Button(self.panel, label='Get rate', pos=(10, 175))
         self.button_rate.Bind(wx.EVT_BUTTON, self.__on_button_get_rate)
@@ -59,6 +59,7 @@ class Window(wx.Frame):
         try:
             self.view.update_data()
             self.__update_checkboxes()
+            self.__update_currency_views()
             wx.CallAfter(pub.sendMessage, 'destroy')
 
         except Exception as err:
@@ -66,11 +67,11 @@ class Window(wx.Frame):
             wx.CallAfter(pub.sendMessage, 'error', message=str(err))
 
     def __update_view(self):
-        self.__change_currency()
-        self.__change_date()
-        self.view.mode = self.choice_mode.GetStringSelection()
+        self.__update_currency_views()
+        self.__update_date_view()
+        self.__update_mode_view()
 
-    def __change_currency(self):
+    def __update_currency_views(self):
         new_base_cur = self.choice_base_cur.GetStringSelection()
         new_target_cur = self.choice_target_cur.GetStringSelection()
 
@@ -87,7 +88,10 @@ class Window(wx.Frame):
 
         self.view.target_cur = new_target_cur
 
-    def __change_date(self):
+    def __update_mode_view(self):
+        self.view.mode = self.choice_mode.GetStringSelection()
+
+    def __update_date_view(self):
         new_date = self.calendar_date.GetDate().Format(format='%d.%m.%Y')
 
         if new_date != self.view.target_date:
@@ -108,8 +112,14 @@ class Window(wx.Frame):
         self.choice_base_cur.SetSelection(0)
         self.choice_target_cur.SetSelection(0)
 
-    def __on_choice(self, event):
-        self.__update_view()
+    def __on_choice_currency(self, event):
+        self.__update_currency_views()
+
+    def __on_choice_mode(self, event):
+        self.__update_mode_view()
+
+    def __on_choice_date(self, event):
+        self.__update_date_view()
 
     def __on_button_get_rate(self, event):
         self.view.get_rate()
