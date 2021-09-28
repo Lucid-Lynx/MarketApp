@@ -31,7 +31,7 @@ class RatePanel(Panel):
         self.button_rate.Bind(wx.EVT_BUTTON, self.__on_button_get_rate)
 
         self.label_rate = wx.StaticText(self, label='Rate', pos=(10, 315))
-        self.rate_value = wx.StaticText(self, pos=(130, 355))
+        self.rate_value = wx.StaticText(self, pos=(130, 310))
 
         self._update_data()
 
