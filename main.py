@@ -25,7 +25,9 @@ def app():
     mode = mode.strip()
 
     if mode not in ['file', 'remote']:
-        raise ValueError('Invalid mode')
+        err = 'Invalid mode'
+        logging.error(err)
+        raise ValueError(err)
 
     if mode == 'file':
         resp = Client(currencies=currencies).get_curr_from_file()
