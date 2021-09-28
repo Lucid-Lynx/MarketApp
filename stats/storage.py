@@ -20,7 +20,6 @@ class Storage:
             'date': current_date,
             'value': value,
         })
-        print(self.values)
 
     def clean(self):
         self.values.clear()

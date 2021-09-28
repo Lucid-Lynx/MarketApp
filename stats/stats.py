@@ -14,7 +14,6 @@ class Stats:
 
     def __init__(self):
         self.storage = Storage()
-        print(self.storage.values)
 
     def sma(self):
         arr = [x['value'] for x in self.storage.values]
