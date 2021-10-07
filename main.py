@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import logging
 
-from decimal import getcontext
+from decimal import setcontext, Context, ROUND_HALF_EVEN
 # from web.client import Client
 from gui.gui import Gui
 from utility.config import PREC
@@ -10,7 +10,8 @@ logging.basicConfig(level=logging.INFO)
 
 
 def app():
-    getcontext().prec = PREC
+    context = Context(prec=PREC, rounding=ROUND_HALF_EVEN)
+    setcontext(context)
     Gui().run()
 
 
@@ -25,7 +26,9 @@ def app():
     mode = mode.strip()
 
     if mode not in ['file', 'remote']:
-        raise ValueError('Invalid mode')
+        err = 'Invalid mode'
+        logging.error(err)
+        raise ValueError(err)
 
     if mode == 'file':
         resp = Client(currencies=currencies).get_curr_from_file()

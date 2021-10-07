@@ -41,7 +41,9 @@ class Parser:
             if re.fullmatch(pattern=alpha_pattern, string=code):
                 alphas.append(code)
             else:
-                raise ValueError(f'Invalid format of code "{code}"')
+                err = f'Invalid format of code "{code}"'
+                logging.error(err)
+                raise ValueError(err)
 
         summary_alpha = alpha_pattern if not len(alphas) else r'(?:%s)' % f'{"|".join(alphas)}'
 

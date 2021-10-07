@@ -2,6 +2,7 @@ import os
 import requests
 import logging
 from datetime import datetime
+from utility.config import DATE_FORMAT
 from parser.parser import Parser
 
 logging.basicConfig(level=logging.INFO)
@@ -22,10 +23,14 @@ class Client:
         # self.currencies = currencies
 
         if date and not Parser.check_date(date=date):
-            raise ValueError(f'Invalid date format in "{date}"')
+            err = f'Invalid date format in "{date}"'
+            logging.error(err)
+            raise ValueError(err)
 
-        if date and datetime.strptime(date, '%d.%m.%Y') > datetime.now():
-            raise ValueError('Incorrect date. Choose today or earlier')
+        if date and datetime.strptime(date, DATE_FORMAT) > datetime.now():
+            err = 'Incorrect date. Choose today or earlier'
+            logging.error(err)
+            raise ValueError(err)
 
         self.date = date
 
@@ -41,7 +46,9 @@ class Client:
 
     def get_curr_from_file(self):
         if not os.path.exists(self.base_path):
-            raise FileNotFoundError(f'Currency HTML file "{self.base_path}" does not exist')
+            err = f'Currency HTML file "{self.base_path}" does not exist'
+            logging.error(err)
+            raise FileNotFoundError(err)
 
         with open(self.base_path, 'r') as f:
             text = f.read()
