@@ -27,11 +27,17 @@ class StatsPanel(Panel):
         self.calendar_to_date = wx.adv.CalendarCtrl(self, pos=(520, 90))
         self.calendar_to_date.Bind(wx.adv.EVT_CALENDAR_SEL_CHANGED, self.__on_choice_to_date)
 
-        self.button_save_rate = wx.Button(self, label='Moving average', pos=(10, 135))
-        self.button_save_rate.Bind(wx.EVT_BUTTON, self.__on_button_moving_average)
+        self.button_save_rate = wx.Button(self, label='Get stats', pos=(10, 135))
+        self.button_save_rate.Bind(wx.EVT_BUTTON, self.__on_button_get_stats)
 
         self.label_sma = wx.StaticText(self, label='SMA', pos=(10, 275))
         self.sma_value = wx.StaticText(self, pos=(140, 270))
+
+        self.label_min = wx.StaticText(self, label='Min', pos=(10, 315))
+        self.min_value = wx.StaticText(self, pos=(140, 310))
+
+        self.label_max = wx.StaticText(self, label='Max', pos=(10, 355))
+        self.max_value = wx.StaticText(self, pos=(140, 350))
 
         self._update_data()
 
@@ -39,6 +45,8 @@ class StatsPanel(Panel):
     def __get_stats(self):
         self.view.save_rates()
         self.view.sma = Stats().sma()
+        self.view.min = Stats().min()
+        self.view.max = Stats().max()
 
     def _update_view(self):
         super()._update_view()
@@ -73,10 +81,20 @@ class StatsPanel(Panel):
     def __on_choice_to_date(self, event):
         self.__update_to_date_view()
 
-    def __on_button_moving_average(self, event):
+    def __on_button_get_stats(self, event):
         self.__get_stats()
 
         if self.view.sma:
             self.sma_value.SetLabel(label=str(self.view.sma))
         else:
             self.sma_value.SetLabel(label='')
+
+        if self.view.min:
+            self.min_value.SetLabel(label=str(self.view.min))
+        else:
+            self.min_value.SetLabel(label='')
+
+        if self.view.max:
+            self.max_value.SetLabel(label=str(self.view.max))
+        else:
+            self.max_value.SetLabel(label='')

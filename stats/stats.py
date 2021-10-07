@@ -1,5 +1,5 @@
 import logging
-from decimal import Decimal
+import numpy as np
 from stats.storage import Storage
 
 logging.basicConfig(level=logging.INFO)
@@ -16,5 +16,10 @@ class Stats:
         self.storage = Storage()
 
     def sma(self):
-        arr = [x['value'] for x in self.storage.values]
-        return sum(arr) / Decimal(len(arr))
+        return np.average(self.storage.values[1:], axis=0)[1]
+
+    def min(self):
+        return np.amin(self.storage.values[1:], axis=0)[1]
+
+    def max(self):
+        return np.amax(self.storage.values[1:], axis=0)[1]

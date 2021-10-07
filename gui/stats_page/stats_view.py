@@ -17,6 +17,8 @@ class StatsView(View):
         super().__init__(base_cur=base_cur, target_cur=target_cur)
 
         self.sma = 0
+        self.min = 0
+        self.max = 0
         self.__from_date = from_date
         self.__to_date = to_date
         self.__storage = Storage()

@@ -1,4 +1,6 @@
+import numpy as np
 import logging
+from decimal import Decimal
 from datetime import date
 
 logging.basicConfig(level=logging.INFO)
@@ -13,13 +15,10 @@ class Storage:
 
     def __init__(self, values=None):
         if not len(self.__dict__):
-            self.values = values if values else []
+            self.values = values if values is not None else np.zeros((1, 2), dtype=Decimal)
 
     def add_value(self, value, current_date=date.today().toordinal()):
-        self.values.append({
-            'date': current_date,
-            'value': value,
-        })
+        self.values = np.append(self.values, [[current_date, value]], axis=0)
 
     def clean(self):
-        self.values.clear()
+        self.values = self.values[:1]
