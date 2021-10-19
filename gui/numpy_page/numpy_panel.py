@@ -3,21 +3,21 @@ import wx.adv
 import logging
 
 from utility.config import DATE_FORMAT
-from stats.stats import Stats
 from gui.loading_dialog import load_process
 from gui.panel import Panel, handle_exception
-from gui.stats_page import PAGE_NAME
-from gui.stats_page.stats_view import StatsView
+from gui.numpy_page import PAGE_NAME
+from gui.numpy_page.numpy_view import NumpyView
+from stats.numpy_stats.numpy_stats import StatsNumpy
 
 logging.basicConfig(level=logging.INFO)
 
 
-class StatsPanel(Panel):
+class NumpyPanel(Panel):
 
     def __init__(self, parent, name=PAGE_NAME):
         super().__init__(parent, name=name)
 
-        self.view = StatsView()
+        self.view = NumpyView()
 
         self.label_from_date = wx.StaticText(self, label='From', pos=(10, 95))
         self.calendar_from_date = wx.adv.CalendarCtrl(self, pos=(140, 90))
@@ -42,11 +42,11 @@ class StatsPanel(Panel):
         self._update_data()
 
     @load_process
-    def __get_stats(self):
+    def _get_stats(self):
         self.view.save_rates()
-        self.view.sma = Stats().sma()
-        self.view.min = Stats().min()
-        self.view.max = Stats().max()
+        self.view.sma = StatsNumpy().sma()
+        self.view.min = StatsNumpy().min()
+        self.view.max = StatsNumpy().max()
 
     def _update_view(self):
         super()._update_view()
@@ -82,7 +82,7 @@ class StatsPanel(Panel):
         self.__update_to_date_view()
 
     def __on_button_get_stats(self, event):
-        self.__get_stats()
+        self._get_stats()
 
         if self.view.sma:
             self.sma_value.SetLabel(label=str(self.view.sma))

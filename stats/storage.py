@@ -1,12 +1,11 @@
-import numpy as np
 import logging
-from decimal import Decimal
-from datetime import date
+
+from abc import ABC, abstractmethod
 
 logging.basicConfig(level=logging.INFO)
 
 
-class Storage:
+class Storage(ABC):
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
@@ -15,10 +14,24 @@ class Storage:
 
     def __init__(self, values=None):
         if not len(self.__dict__):
-            self.values = values if values is not None else np.zeros((1, 2), dtype=Decimal)
+            self.values = values if values else []
+            self.data = self.values
 
-    def add_value(self, value, current_date=date.today().toordinal()):
-        self.values = np.append(self.values, [[current_date, value]], axis=0)
+    @property
+    def data(self):
+        return self.__data
+
+    @data.setter
+    def data(self, values):
+        self.__data = values
+
+    @abstractmethod
+    def add_value(self, *args, **kwargs):
+        pass
 
     def clean(self):
-        self.values = self.values[:1]
+        self.values = []
+        self.update_data()
+
+    def update_data(self):
+        self.data = self.values
