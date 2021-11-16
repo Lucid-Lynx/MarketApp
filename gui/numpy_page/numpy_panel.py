@@ -3,7 +3,6 @@ import wx.adv
 import logging
 
 from utility.config import DATE_FORMAT
-from gui.loading_dialog import load_process
 from gui.panel import Panel, handle_exception
 from gui.numpy_page import PAGE_NAME
 from gui.numpy_page.numpy_view import NumpyView
@@ -41,7 +40,6 @@ class NumpyPanel(Panel):
 
         self._update_data()
 
-    @load_process
     def _get_stats(self):
         self.view.save_rates()
         self.view.sma = StatsNumpy().sma()
