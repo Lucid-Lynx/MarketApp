@@ -1,25 +1,29 @@
 import logging
-import numpy as np
-from stats.storage import Storage
+
+from abc import ABC, abstractmethod
 
 logging.basicConfig(level=logging.INFO)
 
 
-class Stats:
+class Stats(ABC):
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
             cls.instance = super(Stats, cls).__new__(cls)
         return cls.instance
 
+    @abstractmethod
     def __init__(self):
-        self.storage = Storage()
+        pass
 
+    @abstractmethod
     def sma(self):
-        return np.average(self.storage.values[1:], axis=0)[1]
+        pass
 
+    @abstractmethod
     def min(self):
-        return np.amin(self.storage.values[1:], axis=0)[1]
+        pass
 
+    @abstractmethod
     def max(self):
-        return np.amax(self.storage.values[1:], axis=0)[1]
+        pass

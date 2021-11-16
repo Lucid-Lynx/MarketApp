@@ -3,7 +3,6 @@ import wx.adv
 import logging
 
 from utility.config import DATE_FORMAT
-from gui.loading_dialog import load_process
 from gui.panel import Panel, handle_exception
 from gui.rate_page import PAGE_NAME
 from gui.rate_page.rate_view import RateView
@@ -35,7 +34,6 @@ class RatePanel(Panel):
 
         self._update_data()
 
-    @load_process
     def _collect_data(self):
         self.view.get_data(target_date=self.view.target_date)
         self._update_view()

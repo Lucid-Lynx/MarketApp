@@ -2,7 +2,6 @@ import wx.adv
 import functools
 import logging
 
-from gui.loading_dialog import load_process
 from gui.view import View
 
 logging.basicConfig(level=logging.INFO)
@@ -40,7 +39,6 @@ class Panel(wx.Panel):
         self.button_clean = wx.Button(self, label='Clean store', pos=(10, 395))
         self.button_clean.Bind(wx.EVT_BUTTON, self.__on_button_clean)
 
-    @load_process
     def _collect_data(self):
         self.view.get_data()
         self._update_view()

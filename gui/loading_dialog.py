@@ -15,8 +15,10 @@ def load_process(method):
     @run_in_background
     def loading(func, *args, **kwargs):
         try:
-            func(*args, **kwargs)
+            result = func(*args, **kwargs)
             wx.CallAfter(pub.sendMessage, 'destroy')
+
+            return result
 
         except Exception as err:
             logging.error(err)
@@ -24,8 +26,10 @@ def load_process(method):
 
     @functools.wraps(method)
     def wrapper(*args, **kwargs):
-        loading(method, *args, **kwargs)
+        thread = loading(method, *args, **kwargs)
         LoadingDialog(None, APP_NAME).ShowModal()
+
+        return thread.join()
 
     return wrapper
 
