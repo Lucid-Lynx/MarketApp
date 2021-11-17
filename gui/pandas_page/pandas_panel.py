@@ -39,7 +39,7 @@ class PandasPanel(NumpyPanel):
         self.view.max = StatsPandas().max()
 
     def __on_button_show_charts(self, event):
-        self._get_stats()
+        self._on_button_get_stats(event)
         self.plot_panel.draw()
 
 

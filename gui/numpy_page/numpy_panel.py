@@ -27,7 +27,7 @@ class NumpyPanel(Panel):
         self.calendar_to_date.Bind(wx.adv.EVT_CALENDAR_SEL_CHANGED, self.__on_choice_to_date)
 
         self.button_save_rate = wx.Button(self, label='Get stats', pos=(10, 135))
-        self.button_save_rate.Bind(wx.EVT_BUTTON, self.__on_button_get_stats)
+        self.button_save_rate.Bind(wx.EVT_BUTTON, self._on_button_get_stats)
 
         self.label_sma = wx.StaticText(self, label='SMA', pos=(10, 275))
         self.sma_value = wx.StaticText(self, pos=(140, 270))
@@ -79,7 +79,7 @@ class NumpyPanel(Panel):
     def __on_choice_to_date(self, event):
         self.__update_to_date_view()
 
-    def __on_button_get_stats(self, event):
+    def _on_button_get_stats(self, event):
         self._get_stats()
 
         if self.view.sma:
