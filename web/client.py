@@ -3,6 +3,7 @@ import requests
 import logging
 from datetime import datetime
 from parser.parser import Parser
+from utility.config import DATE_FORMAT
 
 logging.basicConfig(level=logging.INFO)
 
@@ -23,7 +24,7 @@ class Client:
         if date and not Parser.check_date(date=date):
             raise ValueError(f'Invalid date format in "{date}"')
 
-        if date and datetime.strptime(date, '%d.%m.%Y') > datetime.now():
+        if date and datetime.strptime(date, DATE_FORMAT) > datetime.now():
             raise ValueError('Incorrect date. Choose today or earlier')
 
         self.date = date

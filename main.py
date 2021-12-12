@@ -1,11 +1,17 @@
 #!/usr/bin/python3
 import logging
+
+from decimal import setcontext, Context, ROUND_HALF_EVEN
 from web.client import Client
+from utility.config import PREC
 
 logging.basicConfig(level=logging.INFO)
 
 
 def app():
+    context = Context(prec=PREC, rounding=ROUND_HALF_EVEN)
+    setcontext(context)
+
     print('Choose currencies or skip:')
     currencies = input()
     print('Choose mode: file or remote:')
