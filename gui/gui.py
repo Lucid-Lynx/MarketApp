@@ -17,8 +17,16 @@ class Gui:
         return cls.instance
 
     def __init__(self):
-        self.app = wx.App()
+        self.app = wx.App(False)
         self.wnd = Window(None, APP_NAME)
+
+        self.app.Bind(wx.EVT_WINDOW_DESTROY, self.__on_exit)
 
     def run(self):
         self.app.MainLoop()
+
+    def stop(self):
+        self.app.ExitMainLoop()
+
+    def __on_exit(self, event):
+        self.stop()

@@ -13,6 +13,8 @@ def run_in_background(method):
         thread = Loader(method, *args, **kwargs)
         thread.start()
 
+        return thread
+
     return wrapper
 
 
@@ -23,7 +25,13 @@ class Loader(Thread):
         self.method = method
         self.args = args
         self.kwargs = kwargs
+        self.__return = None
 
     def run(self):
         logging.info('Start background process')
-        self.method(*self.args, **self.kwargs)
+        self.__return = self.method(*self.args, **self.kwargs)
+
+    def join(self, *args, **kwargs):
+        super().join(*args, **kwargs)
+
+        return self.__return
