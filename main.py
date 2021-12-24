@@ -54,18 +54,12 @@ class Workflow:
         return record
 
     def get_data(self, target_date=date.today().strftime(DATE_FORMAT)):
-        if self.mode == 'Remote':
-            record = self.store.get_record(current_date=target_date) or self.update_store(target_date=target_date)
-        else:
-            record = Client(date=target_date).get_curr_from_file()
-
-        return record
+        return self.store.get_record(current_date=target_date) or self.update_store(target_date=target_date) \
+            if self.mode == 'Remote' else Record(data=Client(date=target_date).get_curr_from_file())
 
     @staticmethod
     def load_rates(target_date=date.today().strftime(DATE_FORMAT)):
-        resp = Client(date=target_date).get_curr_base()
-
-        return resp
+        return Client(date=target_date).get_curr_base()
 
     def get_rate(self, target_date=date.today().strftime(DATE_FORMAT)):
         record = self.get_data(target_date=target_date)
