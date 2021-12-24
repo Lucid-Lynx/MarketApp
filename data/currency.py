@@ -33,10 +33,3 @@ class Currency:
         if self.quantity > 1:
             self.__rate = self.rate / self.quantity
             self.__quantity = 1
-
-    def change_base_currency(self, base_currency=DEFAULT_BASE_CURRENCY, base_rate=1):
-        self.__base_currency = base_currency
-        self.__rate = self.rate / base_rate
-
-    def update_data(self, base_currency=DEFAULT_BASE_CURRENCY, quantity=1, rate=1):
-        self.__init__(code=self.code, base_currency=base_currency, quantity=quantity, rate=rate)

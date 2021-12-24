@@ -29,10 +29,3 @@ class Record:
                     quantity=parsed_data['currencies'][key]['quantity'],
                     rate=parsed_data['currencies'][key]['value']) for key in parsed_data['currencies'].keys()
             })
-
-    def change_base_currency(self, base_currency=DEFAULT_BASE_CURRENCY):
-        self.base_currency = base_currency
-        base_currency_rate = self.rates[base_currency].rate
-
-        for currency in self.rates.values():
-            currency.change_base_currency(base_currency=base_currency, base_rate=base_currency_rate)
