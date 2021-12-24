@@ -1,9 +1,8 @@
 import logging
 
-from datetime import date
-from utility.config import DEFAULT_BASE_CURRENCY
-from parser.parser import Parser
-from .currency import Currency
+from datetime import date, datetime
+from utility.config import DEFAULT_BASE_CURRENCY, DATE_FORMAT
+from .record import Record
 
 logging.basicConfig(level=logging.INFO)
 
@@ -16,32 +15,34 @@ class Store:
 
         return cls.instance
 
-    def __init__(self, base_currency=DEFAULT_BASE_CURRENCY, data=None):
+    def __init__(self, data=None, base_currency=DEFAULT_BASE_CURRENCY):
+        if not hasattr(self, 'data'):
+            self.data = data or []
+
         self.base_currency = base_currency
 
-        parsed_data = Parser(text=data).get_curr_info() if data else None
+    def get_record(self, current_date=date.today().strftime(DATE_FORMAT)):
+        found = list(filter(lambda x: x.current_date == current_date, self.data))
 
-        self.current_date = parsed_data['date'] if parsed_data else date.today().strftime('%d.%m.%Y')
-        self.available_currencies = [DEFAULT_BASE_CURRENCY]
-        self.rates = {
-            DEFAULT_BASE_CURRENCY: Currency(),
-        }
+        return found[0] if len(found) else None
 
-        if parsed_data:
-            self.available_currencies += [key for key in parsed_data['currencies'].keys()]
-            self.rates.update({
-                key: Currency(
-                    code=parsed_data['currencies'][key]['alpha_code'],
-                    quantity=parsed_data['currencies'][key]['quantity'],
-                    rate=parsed_data['currencies'][key]['value']) for key in parsed_data['currencies'].keys()
-            })
+    def add_record(self, record: Record):
+        found = self.get_record(current_date=record.current_date)
 
-        if self.base_currency != DEFAULT_BASE_CURRENCY:
-            self.change_base_currency(base_currency=self.base_currency)
+        if not found:
+            self.data.append(record)
+            self.__sort()
 
-    def change_base_currency(self, base_currency=DEFAULT_BASE_CURRENCY):
-        self.base_currency = base_currency
-        base_currency_rate = self.rates[base_currency].rate
+    def remove_record(self, current_date=date.today().strftime(DATE_FORMAT)):
+        found = self.get_record(current_date=current_date)
+        self.data.remove(found)
 
-        for currency in self.rates.values():
-            currency.change_base_currency(base_currency=base_currency, base_rate=base_currency_rate)
+    def clean(self):
+        self.data.clear()
+
+    def __sort(self):
+        self.data.sort(key=self.__sorter)
+
+    @staticmethod
+    def __sorter(record: Record):
+        return datetime.strptime(record.current_date, DATE_FORMAT)

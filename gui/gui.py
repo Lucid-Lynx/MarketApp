@@ -3,7 +3,7 @@ import wx.adv
 import logging
 
 from utility.config import APP_NAME
-from .widgets import Window
+from gui.window import Window
 
 logging.basicConfig(level=logging.INFO)
 
@@ -17,12 +17,16 @@ class Gui:
         return cls.instance
 
     def __init__(self):
-        self.app = wx.App()
+        self.app = wx.App(False)
         self.wnd = Window(None, APP_NAME)
 
+        self.app.Bind(wx.EVT_WINDOW_DESTROY, self.__on_exit)
+
     def run(self):
-        self.update_window()
         self.app.MainLoop()
 
-    def update_window(self):
-        self.wnd.update_data()
+    def stop(self):
+        self.app.ExitMainLoop()
+
+    def __on_exit(self, event):
+        self.stop()
