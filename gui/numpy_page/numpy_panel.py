@@ -1,5 +1,6 @@
 import wx
 import wx.adv
+import platform
 import logging
 
 from utility.config import DATE_FORMAT
@@ -60,7 +61,9 @@ class NumpyPanel(Panel):
 
         to_date_obj = wx.DateTime()
         to_date_obj.ParseFormat(self.view.to_date, DATE_FORMAT)
-        self.calendar_from_date.SetDateRange(upperdate=to_date_obj)
+
+        if platform.system() == 'Linux':
+            self.calendar_from_date.SetDateRange(upperdate=to_date_obj)
 
     @handle_exception
     def __update_to_date_view(self):
@@ -71,7 +74,9 @@ class NumpyPanel(Panel):
 
         from_date_obj = wx.DateTime()
         from_date_obj.ParseFormat(self.view.from_date, DATE_FORMAT)
-        self.calendar_to_date.SetDateRange(lowerdate=from_date_obj, upperdate=wx.DateTime.Today())
+
+        if platform.system() == 'Linux':
+            self.calendar_to_date.SetDateRange(lowerdate=from_date_obj, upperdate=wx.DateTime.Today())
 
     def __on_choice_from_date(self, event):
         self.__update_from_date_view()
