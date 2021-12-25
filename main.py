@@ -4,7 +4,7 @@ import logging
 
 from datetime import datetime
 from decimal import setcontext, Context, ROUND_HALF_EVEN
-from parser.parser import Parser
+from parser_tools.parser import Parser
 from utility.config import PREC, DATE_FORMAT
 
 logging.basicConfig(level=logging.INFO)
