@@ -50,7 +50,7 @@ class Client:
             logging.error(err)
             raise FileNotFoundError(err)
 
-        with open(self.base_path, 'r') as f:
+        with open(self.base_path, 'r', encoding='utf-8') as f:
             text = f.read()
 
             # return Parser(text=text, currencies=self.currencies).get_curr_info()
