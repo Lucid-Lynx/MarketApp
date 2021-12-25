@@ -2,7 +2,7 @@ import os
 import requests
 import logging
 from datetime import datetime
-from parser.parser import Parser
+from parser_tools.parser import Parser
 from utility.config import DATE_FORMAT
 
 logging.basicConfig(level=logging.INFO)
