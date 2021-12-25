@@ -19,7 +19,7 @@ class Client:
     # def __init__(self, currencies=None, date=None):
     def __init__(self, date=None):
         self.base_url = 'http://www.cbr.ru'
-        self.base_path = os.path.relpath(os.path.expanduser('~/Development/Currencies/curr_base.html'))
+        self.base_path = os.path.relpath(os.path.expanduser('../Currencies/curr_base.html'))
         # self.currencies = currencies
 
         if date and not Parser.check_date(date=date):
