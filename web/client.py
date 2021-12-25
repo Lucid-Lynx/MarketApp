@@ -42,7 +42,7 @@ class Client:
         if not os.path.exists(self.base_path):
             raise FileNotFoundError(f'Currency HTML file "{self.base_path}" does not exist')
 
-        with open(self.base_path, 'r') as f:
+        with open(self.base_path, 'r', encoding='utf-8') as f:
             text = f.read()
 
             return Parser(text=text, currencies=self.currencies).get_curr_info()
