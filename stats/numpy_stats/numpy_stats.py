@@ -1,10 +1,7 @@
-import logging
 import numpy as np
 
 from stats.stats import Stats
 from stats.numpy_stats.numpy_storage import StorageNumpy
-
-logging.basicConfig(level=logging.INFO)
 
 
 class StatsNumpy(Stats):

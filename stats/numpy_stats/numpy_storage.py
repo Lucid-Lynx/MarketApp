@@ -1,11 +1,8 @@
 import numpy as np
-import logging
 
 from decimal import Decimal
 from datetime import date
 from stats.storage import Storage
-
-logging.basicConfig(level=logging.INFO)
 
 
 class StorageNumpy(Storage):

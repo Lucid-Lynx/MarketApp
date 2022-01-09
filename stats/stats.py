@@ -1,8 +1,4 @@
-import logging
-
 from abc import ABC, abstractmethod
-
-logging.basicConfig(level=logging.INFO)
 
 
 class Stats(ABC):
