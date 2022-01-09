@@ -1,13 +1,9 @@
-import logging
-
 from datetime import date
 from web.client import Client
 from data.cache import Cache
 from data.record import Record
 from utility.config import DEFAULT_BASE_CURRENCY, DATE_FORMAT
 from gui.loading_dialog import load_process
-
-logging.basicConfig(level=logging.INFO)
 
 
 class View:

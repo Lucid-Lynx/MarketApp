@@ -1,11 +1,7 @@
-import logging
-
 from datetime import date
 from utility.config import DEFAULT_BASE_CURRENCY, DATE_FORMAT
 from parser_tools.parser import Parser
 from .currency import Currency
-
-logging.basicConfig(level=logging.INFO)
 
 
 class Record:

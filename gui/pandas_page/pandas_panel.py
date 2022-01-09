@@ -2,7 +2,6 @@ import wx
 import wx.adv
 import matplotlib
 import matplotlib.pyplot as plt
-import logging
 
 from utility.config import DATE_FORMAT
 from matplotlib.dates import DateFormatter, DayLocator
@@ -14,8 +13,6 @@ from stats.pandas_stats.pandas_storage import StoragePandas
 
 matplotlib.use('WXAgg')
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
-
-logging.basicConfig(level=logging.INFO)
 
 
 class PandasPanel(NumpyPanel):

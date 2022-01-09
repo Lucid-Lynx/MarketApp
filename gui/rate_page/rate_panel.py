@@ -1,13 +1,10 @@
 import wx
 import wx.adv
-import logging
 
 from utility.config import DATE_FORMAT
 from gui.panel import Panel, handle_exception
 from gui.rate_page import PAGE_NAME
 from gui.rate_page.rate_view import RateView
-
-logging.basicConfig(level=logging.INFO)
 
 
 class RatePanel(Panel):
