@@ -2,7 +2,7 @@ import logging
 
 from datetime import date
 from web.client import Client
-from data.store import Store
+from data.cache import Cache
 from data.record import Record
 from utility.config import DEFAULT_BASE_CURRENCY, DATE_FORMAT
 from gui.loading_dialog import load_process
@@ -16,7 +16,7 @@ class View:
         self.base_cur = base_cur
         self.target_cur = target_cur
         self.mode = mode
-        self.__store = Store()
+        self.__store = Cache()
 
     @property
     def store(self):
@@ -28,7 +28,7 @@ class View:
 
     @load_process
     def update_store(self, target_date=date.today().strftime(DATE_FORMAT)):
-        record = Record(data=self.load_rates(target_date=target_date))
+        record = Record(data=self.load_rates(target_date=target_date), current_date=target_date)
         self.store.add_record(record=record)
 
         return record

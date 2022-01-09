@@ -73,6 +73,7 @@ class PlotPanel(wx.Panel):
         plt.xticks(rotation=45)
 
         self.axes.plot(dates, rates)
+        plt.scatter(dates, rates, s=10)
 
         plt.locator_params(axis='x', nbins=len(dates))
         plt.locator_params(axis='y', nbins=len(rates))
