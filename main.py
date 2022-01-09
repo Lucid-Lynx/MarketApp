@@ -25,8 +25,9 @@ class Workflow:
 
     def get_data(self, target_date=date.today().strftime(DATE_FORMAT)):
 
-        return Record(data=self.load_rates(target_date=target_date)) if self.mode == 'Remote' \
-            else Record(data=Client(date=target_date).get_curr_from_file())
+        return Record(data=self.load_rates(target_date=target_date), current_date=target_date) \
+            if self.mode == 'Remote' else \
+            Record(data=Client(date=target_date).get_curr_from_file(), current_date=target_date)
 
     @staticmethod
     @run_in_background
