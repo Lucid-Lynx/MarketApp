@@ -6,7 +6,7 @@ from datetime import date
 from decimal import setcontext, Context, ROUND_HALF_EVEN
 from web.client import Client
 from utility.config import PREC, DEFAULT_BASE_CURRENCY, DATE_FORMAT
-from data.store import Store
+from data.cache import Cache
 from data.record import Record
 from data.loader import run_in_background
 
@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 class Workflow:
 
     def __init__(self, target_cur=DEFAULT_BASE_CURRENCY,  mode='Remote'):
-        self.__store = Store()
+        self.__store = Cache()
         self.__base_cur = DEFAULT_BASE_CURRENCY
         self.target_cur = target_cur
         self.mode = mode
@@ -48,14 +48,15 @@ class Workflow:
 
     @run_in_background
     def update_store(self, target_date=date.today().strftime(DATE_FORMAT)):
-        record = Record(data=self.load_rates(target_date=target_date))
+        record = Record(data=self.load_rates(target_date=target_date), current_date=target_date)
         self.store.add_record(record=record)
 
         return record
 
     def get_data(self, target_date=date.today().strftime(DATE_FORMAT)):
         return self.store.get_record(current_date=target_date) or self.update_store(target_date=target_date) \
-            if self.mode == 'Remote' else Record(data=Client(date=target_date).get_curr_from_file())
+            if self.mode == 'Remote' else \
+            Record(data=Client(date=target_date).get_curr_from_file(), current_date=target_date)
 
     @staticmethod
     def load_rates(target_date=date.today().strftime(DATE_FORMAT)):
