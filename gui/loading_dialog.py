@@ -1,6 +1,7 @@
 import wx
 import wx.adv
 import functools
+import platform
 import logging
 
 from pubsub import pub
@@ -27,7 +28,9 @@ def load_process(method):
     @functools.wraps(method)
     def wrapper(*args, **kwargs):
         thread = loading(method, *args, **kwargs)
-        LoadingDialog(None, APP_NAME).ShowModal()
+
+        if platform.system() == 'Linux':
+            LoadingDialog(None, APP_NAME).ShowModal()
 
         return thread.join()
 
