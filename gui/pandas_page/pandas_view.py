@@ -1,11 +1,7 @@
-import logging
-
 from datetime import date, datetime, timedelta
 from stats.pandas_stats.pandas_storage import StoragePandas
 from utility.config import DEFAULT_BASE_CURRENCY, DATE_FORMAT
 from gui.numpy_page.numpy_view import NumpyView
-
-logging.basicConfig(level=logging.INFO)
 
 
 class PandasView(NumpyView):
