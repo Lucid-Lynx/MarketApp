@@ -1,15 +1,12 @@
 import wx
 import wx.adv
 import platform
-import logging
 
 from utility.config import DATE_FORMAT
 from gui.panel import Panel, handle_exception
 from gui.numpy_page import PAGE_NAME
 from gui.numpy_page.numpy_view import NumpyView
 from stats.numpy_stats.numpy_stats import StatsNumpy
-
-logging.basicConfig(level=logging.INFO)
 
 
 class NumpyPanel(Panel):

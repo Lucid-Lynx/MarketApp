@@ -1,11 +1,8 @@
 import pandas as pd
-import logging
 
 from datetime import date
 from utility.config import DEFAULT_BASE_CURRENCY, DATE_FORMAT
 from stats.storage import Storage
-
-logging.basicConfig(level=logging.INFO)
 
 
 class StoragePandas(Storage):

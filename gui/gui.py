@@ -1,11 +1,8 @@
 import wx
 import wx.adv
-import logging
 
 from utility.config import APP_NAME
 from gui.window import Window
-
-logging.basicConfig(level=logging.INFO)
 
 
 class Gui:

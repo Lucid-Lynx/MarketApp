@@ -1,9 +1,5 @@
-import logging
-
 from decimal import Decimal
 from utility.config import DEFAULT_BASE_CURRENCY
-
-logging.basicConfig(level=logging.INFO)
 
 
 class Currency:

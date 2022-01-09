@@ -1,9 +1,5 @@
-import logging
-
 from stats.stats import Stats
 from stats.pandas_stats.pandas_storage import StoragePandas
-
-logging.basicConfig(level=logging.INFO)
 
 
 class StatsPandas(Stats):
