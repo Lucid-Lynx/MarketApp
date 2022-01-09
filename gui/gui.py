@@ -1,6 +1,5 @@
 import wx
 import wx.adv
-import platform
 import logging
 
 from utility.config import APP_NAME
@@ -20,9 +19,7 @@ class Gui:
     def __init__(self):
         self.app = wx.App(False)
         self.wnd = Window(None, APP_NAME)
-
-        if platform.system() == 'Linux':
-            self.app.Bind(wx.EVT_WINDOW_DESTROY, self.__on_exit)
+        self.app.Bind(wx.EVT_WINDOW_DESTROY, self.__on_exit)
 
     def run(self):
         self.app.MainLoop()
