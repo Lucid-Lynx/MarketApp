@@ -7,11 +7,11 @@ from .record import Record
 logging.basicConfig(level=logging.INFO)
 
 
-class Store:
+class Cache:
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
-            cls.instance = super(Store, cls).__new__(cls)
+            cls.instance = super(Cache, cls).__new__(cls)
 
         return cls.instance
 
