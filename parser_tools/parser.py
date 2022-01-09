@@ -1,9 +1,6 @@
 import re
 import decimal
 import json
-import logging
-
-logging.basicConfig(level=logging.INFO)
 
 
 class Parser:
