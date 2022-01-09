@@ -1,10 +1,6 @@
-import logging
-
 from datetime import date, datetime
 from utility.config import DEFAULT_BASE_CURRENCY, DATE_FORMAT
 from .record import Record
-
-logging.basicConfig(level=logging.INFO)
 
 
 class Cache:
