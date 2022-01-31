@@ -8,8 +8,11 @@ from gui.rate_page.rate_view import RateView
 
 
 class RatePanel(Panel):
+    """
+    Panel for rate page
+    """
 
-    def __init__(self, parent, name=PAGE_NAME):
+    def __init__(self, parent: wx.Window, name: str = PAGE_NAME):
         super().__init__(parent, name=name)
 
         self.view = RateView()
@@ -32,19 +35,39 @@ class RatePanel(Panel):
         self._update_data()
 
     def _collect_data(self):
+        """
+        Get current data from cache and set in the view
+        :return: None
+        """
+
         self.view.get_data(target_date=self.view.target_date)
         self._update_view()
 
     def _update_view(self):
+        """
+        Update view by data from panel
+        :return: None
+        """
+
         super()._update_view()
         self.__update_date_view()
         self.__update_mode_view()
 
     def __update_mode_view(self):
+        """
+        Update mode view
+        :return: None
+        """
+
         self.view.mode = self.choice_mode.GetStringSelection()
 
     @handle_exception
     def __update_date_view(self):
+        """
+        Update target date view
+        :return: None
+        """
+
         new_date = self.calendar_date.GetDate().Format(format=DATE_FORMAT)
 
         if new_date != self.view.target_date:
@@ -54,20 +77,48 @@ class RatePanel(Panel):
         self.calendar_date.SetDateRange(upperdate=wx.DateTime.Today())
 
     def _update_base_cur_checkbox(self):
+        """
+        Update base currency checkbox
+        :return: None
+        """
+
         self.choice_base_cur.Clear()
         self.choice_base_cur.AppendItems(self.view.get_available_bases(target_date=self.view.target_date))
 
     def _update_target_cur_checkbox(self):
+        """
+        Update target currency checkbox
+        :return: None
+        """
+
         self.choice_target_cur.Clear()
         self.choice_target_cur.AppendItems(self.view.get_available_targets(target_date=self.view.target_date))
 
-    def __on_choice_mode(self, event):
+    def __on_choice_mode(self, event: wx.Event):
+        """
+        Callback for mode checkbox
+        :param event: generated event: Event
+        :return: None
+        """
+
         self.__update_mode_view()
 
-    def __on_choice_date(self, event):
+    def __on_choice_date(self, event: wx.Event):
+        """
+        Callback for target date checkbox
+        :param event: generated event: Event
+        :return: None
+        """
+
         self.__update_date_view()
 
-    def __on_button_get_rate(self, event):
+    def __on_button_get_rate(self, event: wx.Event):
+        """
+        Callback for get rate button
+        :param event: generated event: Event
+        :return: None
+        """
+
         self.view.get_rate()
 
         if self.view.rate:
