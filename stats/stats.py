@@ -17,6 +17,10 @@ class Stats(ABC):
         pass
 
     @abstractmethod
+    def average(self):
+        pass
+
+    @abstractmethod
     def min(self):
         pass
 

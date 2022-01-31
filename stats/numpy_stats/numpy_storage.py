@@ -17,7 +17,7 @@ class StorageNumpy(Storage):
             self, np.zeros((1, 2), dtype=Decimal) if not len(values)
             else np.array(list(map(lambda x: [x['date'], x['rate']], values))))
 
-    def add_value(self, value, current_date=date.today().toordinal()):
+    def add_value(self, value, current_date=date.today()):
         # self.values = np.append(self.values, [[current_date, value]], axis=0)
 
         self.values.append({

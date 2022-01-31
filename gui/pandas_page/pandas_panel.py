@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 from utility.config import DATE_FORMAT
 from matplotlib.dates import DateFormatter, DayLocator
+from gui.panel import handle_exception
 from gui.numpy_page.numpy_panel import NumpyPanel
 from gui.pandas_page import PAGE_NAME
 from gui.pandas_page.pandas_view import PandasView
@@ -29,9 +30,12 @@ class PandasPanel(NumpyPanel):
 
         self._update_data()
 
+    @handle_exception
     def _get_stats(self):
         self.view.save_rates()
-        self.view.sma = StatsPandas().sma()
+        self.view.check_window_size()
+        self.view.sma = StatsPandas().sma(n=self.view.win_size)
+        self.view.average = StatsPandas().average()
         self.view.min = StatsPandas().min()
         self.view.max = StatsPandas().max()
 

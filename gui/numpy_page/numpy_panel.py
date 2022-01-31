@@ -27,20 +27,30 @@ class NumpyPanel(Panel):
         self.button_save_rate = wx.Button(self, label='Get stats', pos=(10, 135))
         self.button_save_rate.Bind(wx.EVT_BUTTON, self._on_button_get_stats)
 
-        self.label_sma = wx.StaticText(self, label='SMA', pos=(10, 275))
-        self.sma_value = wx.StaticText(self, pos=(140, 270))
+        self.label_win_size = wx.StaticText(self, label='Window size', pos=(10, 275))
+        self.win_size_value = wx.SpinCtrl(self, pos=(140, 270), min=1, initial=1)
+        self.win_size_value.Bind(wx.EVT_SPINCTRL, self.__on_choice_win_size)
 
-        self.label_min = wx.StaticText(self, label='Min', pos=(10, 315))
-        self.min_value = wx.StaticText(self, pos=(140, 310))
+        self.label_sma = wx.StaticText(self, label='SMA', pos=(10, 315))
+        self.sma_value = wx.StaticText(self, pos=(140, 310))
 
-        self.label_max = wx.StaticText(self, label='Max', pos=(10, 355))
-        self.max_value = wx.StaticText(self, pos=(140, 350))
+        self.label_average = wx.StaticText(self, label='Average', pos=(10, 355))
+        self.average_value = wx.StaticText(self, pos=(140, 350))
+
+        self.label_min = wx.StaticText(self, label='Min', pos=(10, 395))
+        self.min_value = wx.StaticText(self, pos=(140, 390))
+
+        self.label_max = wx.StaticText(self, label='Max', pos=(10, 435))
+        self.max_value = wx.StaticText(self, pos=(140, 430))
 
         self._update_data()
 
+    @handle_exception
     def _get_stats(self):
         self.view.save_rates()
-        self.view.sma = StatsNumpy().sma()
+        self.view.check_window_size()
+        self.view.sma = StatsNumpy().sma(n=self.view.win_size)
+        self.view.average = StatsNumpy().average()
         self.view.min = StatsNumpy().min()
         self.view.max = StatsNumpy().max()
 
@@ -85,9 +95,12 @@ class NumpyPanel(Panel):
         self._get_stats()
 
         if self.view.sma:
-            self.sma_value.SetLabel(label=str(self.view.sma))
+            self.sma_value.SetLabel(label='   '.join(str(x) for x in self.view.sma))
+
+        if self.view.average:
+            self.average_value.SetLabel(label=str(self.view.average))
         else:
-            self.sma_value.SetLabel(label='')
+            self.average_value.SetLabel(label='')
 
         if self.view.min:
             self.min_value.SetLabel(label=str(self.view.min))
@@ -98,3 +111,6 @@ class NumpyPanel(Panel):
             self.max_value.SetLabel(label=str(self.view.max))
         else:
             self.max_value.SetLabel(label='')
+
+    def __on_choice_win_size(self, event):
+        self.view.win_size = int(self.win_size_value.GetValue())

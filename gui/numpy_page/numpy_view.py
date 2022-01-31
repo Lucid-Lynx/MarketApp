@@ -16,7 +16,9 @@ class NumpyView(View):
 
         super().__init__(base_cur=base_cur, target_cur=target_cur)
 
-        self.sma = 0
+        self.win_size = 1
+        self.sma = []
+        self.average = 0
         self.min = 0
         self.max = 0
         self.__from_date = from_date
@@ -64,6 +66,12 @@ class NumpyView(View):
             logging.error(err)
             raise ValueError(err)
 
+    def check_window_size(self):
+        if self.win_size > len(self.storage.data):
+            err = 'Window size is higher, than collected data quantity!'
+            logging.error(err)
+            raise ValueError(err)
+
     def save_rates(self):
         self.storage.clean()
         from_date_obj = datetime.strptime(self.from_date, DATE_FORMAT)
@@ -71,8 +79,7 @@ class NumpyView(View):
 
         while from_date_obj <= to_date_obj:
             self.storage.add_value(
-                value=self.get_rate(target_date=from_date_obj.strftime(DATE_FORMAT)),
-                current_date=from_date_obj.toordinal())
+                value=self.get_rate(target_date=from_date_obj.strftime(DATE_FORMAT)), current_date=from_date_obj)
             from_date_obj = from_date_obj + timedelta(days=1)
 
         self.storage.update_data()
