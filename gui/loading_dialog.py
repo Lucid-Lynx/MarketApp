@@ -12,9 +12,21 @@ logging.basicConfig(level=logging.INFO)
 
 
 def load_process(method):
+    """
+    Decorator for download processes, which shows loading dialog
+    :param method: decorated method
+    :return: wrapper for decorated method
+    """
 
     @run_in_background
     def loading(func, *args, **kwargs):
+        """
+        Run decorated method with dialog message
+        :param func: decorated method
+        :param args: list
+        :param kwargs: dict
+        :return: object
+        """
         try:
             result = func(*args, **kwargs)
             wx.CallAfter(pub.sendMessage, 'destroy')
@@ -27,6 +39,13 @@ def load_process(method):
 
     @functools.wraps(method)
     def wrapper(*args, **kwargs):
+        """
+        Run thread with decorated method and show modal window
+        :param args: list
+        :param kwargs: dict
+        :return: return data from thread: object
+        """
+
         thread = loading(method, *args, **kwargs)
 
         if platform.system() == 'Linux':
@@ -38,6 +57,9 @@ def load_process(method):
 
 
 class LoadingDialog(wx.Dialog):
+    """
+    Class for loading dialog
+    """
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
@@ -45,7 +67,7 @@ class LoadingDialog(wx.Dialog):
 
         return cls.instance
 
-    def __init__(self, parent, title):
+    def __init__(self, parent: wx.Window, title: str):
         super().__init__(parent, title=title, size=(200, 100))
 
         self.panel = wx.Panel(self)
@@ -56,8 +78,19 @@ class LoadingDialog(wx.Dialog):
         self.Center()
 
     def __on_destroy(self):
+        """
+        Destroy loading dialog
+        :return: None
+        """
+
         self.Destroy()
 
-    def __on_error(self, message):
+    def __on_error(self, message: str):
+        """
+        Show error dialog
+        :param message: error message: str
+        :return: None
+        """
+
         self.__on_destroy()
         wx.MessageDialog(self, message=message, style=wx.OK | wx.ICON_ERROR).ShowModal()

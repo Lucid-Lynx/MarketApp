@@ -2,6 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class Stats(ABC):
+    """
+    Abstract class for statistic operations
+    """
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
@@ -14,6 +17,10 @@ class Stats(ABC):
 
     @abstractmethod
     def sma(self):
+        pass
+
+    @abstractmethod
+    def average(self):
         pass
 
     @abstractmethod
