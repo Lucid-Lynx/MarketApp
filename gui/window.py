@@ -7,8 +7,11 @@ from gui.pandas_page.pandas_panel import PandasPanel, PAGE_NAME as PANDAS_PAGE_N
 
 
 class Window(wx.Frame):
+    """
+    Base window of GUI
+    """
 
-    def __init__(self, parent, title):
+    def __init__(self, parent: wx.Window, title: str):
         super().__init__(parent, title=title)
 
         self.nb = wx.Notebook(self)

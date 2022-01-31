@@ -6,6 +6,9 @@ from gui.window import Window
 
 
 class Gui:
+    """
+    Gui entrypoint class
+    """
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
@@ -19,10 +22,26 @@ class Gui:
         self.app.Bind(wx.EVT_WINDOW_DESTROY, self.__on_exit)
 
     def run(self):
+        """
+        Run GUI main loop
+        :return: None
+        """
+
         self.app.MainLoop()
 
     def stop(self):
+        """
+        Stop GUI main loop
+        :return: None
+        """
+
         self.app.ExitMainLoop()
 
     def __on_exit(self, event):
+        """
+        Callback for closing window event
+        :param event: Event
+        :return: None
+        """
+
         self.stop()
