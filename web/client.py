@@ -7,6 +7,9 @@ from utility.config import DATE_FORMAT
 
 
 class Client:
+    """
+    Web client, based on requests
+    """
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
@@ -14,7 +17,7 @@ class Client:
 
         return cls.instance
 
-    def __init__(self, currencies=None, date=None):
+    def __init__(self, currencies: str = None, date: str = None):
         self.base_url = 'http://www.cbr.ru'
         self.base_path = os.path.relpath(os.path.expanduser('../Currencies/curr_base.html'))
         self.currencies = currencies
@@ -27,7 +30,12 @@ class Client:
 
         self.date = date
 
-    def get_curr_base(self):
+    def get_curr_base(self) -> str:
+        """
+        Get currency data from url
+        :return: html code of page: str
+        """
+
         url = f'{self.base_url}/currency_base/daily/'
         if self.date:
             url = f'{url}?UniDbQuery.Posted=True&UniDbQuery.To={self.date}'
@@ -36,7 +44,12 @@ class Client:
 
         return Parser(text=resp.text, currencies=self.currencies).get_curr_info()
 
-    def get_curr_from_file(self):
+    def get_curr_from_file(self) -> str:
+        """
+        Get currency data from html file
+        :return: html code of page: str
+        """
+
         if not os.path.exists(self.base_path):
             raise FileNotFoundError(f'Currency HTML file "{self.base_path}" does not exist')
 

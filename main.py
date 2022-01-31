@@ -9,6 +9,11 @@ logging.basicConfig(level=logging.INFO)
 
 
 def app():
+    """
+    Main application loop. Runs menu
+    :return: None
+    """
+
     context = Context(prec=PREC, rounding=ROUND_HALF_EVEN)
     setcontext(context)
 
@@ -34,6 +39,11 @@ def app():
 
 
 def main():
+    """
+    Application entry point
+    :return: None
+    """
+
     try:
         app()
 
