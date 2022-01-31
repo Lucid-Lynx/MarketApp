@@ -10,8 +10,11 @@ from stats.numpy_stats.numpy_stats import StatsNumpy
 
 
 class NumpyPanel(Panel):
+    """
+    Panel for Numpy page
+    """
 
-    def __init__(self, parent, name=PAGE_NAME):
+    def __init__(self, parent: wx.Window, name: str = PAGE_NAME):
         super().__init__(parent, name=name)
 
         self.view = NumpyView()
@@ -47,6 +50,11 @@ class NumpyPanel(Panel):
 
     @handle_exception
     def _get_stats(self):
+        """
+        Compute all statistic metrics
+        :return: None
+        """
+
         self.view.save_rates()
         self.view.check_window_size()
         self.view.sma = StatsNumpy().sma(n=self.view.win_size)
@@ -55,12 +63,22 @@ class NumpyPanel(Panel):
         self.view.max = StatsNumpy().max()
 
     def _update_view(self):
+        """
+        Update view by data from panel
+        :return: None
+        """
+
         super()._update_view()
         self.__update_from_date_view()
         self.__update_to_date_view()
 
     @handle_exception
     def __update_from_date_view(self):
+        """
+        Update view for start date
+        :return: None
+        """
+
         new_date = self.calendar_from_date.GetDate().Format(format=DATE_FORMAT)
 
         if new_date != self.view.from_date:
@@ -74,6 +92,11 @@ class NumpyPanel(Panel):
 
     @handle_exception
     def __update_to_date_view(self):
+        """
+        Update view for finish date
+        :return: None
+        """
+
         new_date = self.calendar_to_date.GetDate().Format(format=DATE_FORMAT)
 
         if new_date != self.view.to_date:
@@ -85,13 +108,31 @@ class NumpyPanel(Panel):
         if platform.system() == 'Linux':
             self.calendar_to_date.SetDateRange(lowerdate=from_date_obj, upperdate=wx.DateTime.Today())
 
-    def __on_choice_from_date(self, event):
+    def __on_choice_from_date(self, event: wx.Event):
+        """
+        Callback for start date calendar
+        :param event: generated event: Event
+        :return: None
+        """
+
         self.__update_from_date_view()
 
-    def __on_choice_to_date(self, event):
+    def __on_choice_to_date(self, event: wx.Event):
+        """
+        Callback for finish date calendar
+        :param event: generated event: Event
+        :return: None
+        """
+
         self.__update_to_date_view()
 
-    def _on_button_get_stats(self, event):
+    def _on_button_get_stats(self, event: wx.Event):
+        """
+        Callback for get stats button
+        :param event: generated event: Event
+        :return: None
+        """
+
         self._get_stats()
 
         if self.view.sma:
@@ -112,5 +153,11 @@ class NumpyPanel(Panel):
         else:
             self.max_value.SetLabel(label='')
 
-    def __on_choice_win_size(self, event):
+    def __on_choice_win_size(self, event: wx.Event):
+        """
+        Callback for window size switcher
+        :param event: generated event: Event
+        :return: None
+        """
+
         self.view.win_size = int(self.win_size_value.GetValue())

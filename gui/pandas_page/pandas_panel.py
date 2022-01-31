@@ -17,8 +17,11 @@ from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 
 
 class PandasPanel(NumpyPanel):
+    """
+    Panel for Pandas page
+    """
 
-    def __init__(self, parent, name=PAGE_NAME):
+    def __init__(self, parent: wx.Window, name: str = PAGE_NAME):
         super().__init__(parent, name=name)
 
         self.view = PandasView()
@@ -32,6 +35,11 @@ class PandasPanel(NumpyPanel):
 
     @handle_exception
     def _get_stats(self):
+        """
+        Compute all statistic metrics
+        :return: None
+        """
+
         self.view.save_rates()
         self.view.check_window_size()
         self.view.sma = StatsPandas().sma(n=self.view.win_size)
@@ -39,14 +47,23 @@ class PandasPanel(NumpyPanel):
         self.view.min = StatsPandas().min()
         self.view.max = StatsPandas().max()
 
-    def __on_button_show_charts(self, event):
+    def __on_button_show_charts(self, event: wx.Event):
+        """
+        Callback for show charts button
+        :param event: generated event: Event
+        :return: None
+        """
+
         self._on_button_get_stats(event)
         self.plot_panel.draw()
 
 
 class PlotPanel(wx.Panel):
+    """
+    Panel for plots
+    """
 
-    def __init__(self, parent, size, pos=(0, 0)):
+    def __init__(self, parent: wx.Window, size: tuple, pos: tuple = (0, 0)):
         wx.Panel.__init__(self, parent=parent, size=size, pos=pos)
 
         self.__storage = StoragePandas()
@@ -58,10 +75,15 @@ class PlotPanel(wx.Panel):
         self.canvas = FigureCanvas(self, -1, self.figure)
 
     @property
-    def storage(self):
+    def storage(self) -> StoragePandas:
         return self.__storage
 
     def draw(self):
+        """
+        Draw plot for data from storage
+        :return: None
+        """
+
         self.axes.clear()
 
         dates = self.storage.data['Date'].tolist()
