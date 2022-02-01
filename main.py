@@ -18,7 +18,7 @@ class Workflow:
     Main class with workflow methods
     """
 
-    def __init__(self, target_cur=DEFAULT_BASE_CURRENCY,  mode='Remote'):
+    def __init__(self, target_cur: str = DEFAULT_BASE_CURRENCY,  mode: str = 'Remote'):
         self.__store = Cache()
         self.__base_cur = DEFAULT_BASE_CURRENCY
         self.target_cur = target_cur
