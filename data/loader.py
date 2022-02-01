@@ -17,7 +17,7 @@ def run_in_background(method):
         Wrapper for decorated process
         :param args: list
         :param kwargs: dict
-        :return: background thread: Thread
+        :return: data returned from background method: object
         """
 
         return Loader(method, *args, **kwargs).run()
