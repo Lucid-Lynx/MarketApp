@@ -4,11 +4,20 @@ import json
 
 
 class Parser:
-    def __init__(self, text, currencies=None):
+    """
+    Regex parser
+    """
+
+    def __init__(self, text: str, currencies: str = None):
         self.text = text
         self.currencies = currencies.split(',') if currencies else []
 
-    def get_pattern(self):
+    def get_pattern(self) -> re.Pattern:
+        """
+        Get regex pattern for table record with currency rates
+        :return: record pattern: Pattern
+        """
+
         alpha_pattern = r'[A-Z]{3}'
         alphas = []
 
@@ -27,7 +36,12 @@ class Parser:
             r'[ ]{8}<tr>[\r\n]+[ ]{10}<td>(\d{3})</td>[\r\n]+[ ]{10}<td>(%s)</td>[\r\n]+[ ]{10}<td>(\d+)</td>'
             r'[\r\n]+[ ]{10}<td>([А-Яа-я ]+)</td>[\r\n]+[ ]{10}<td>([0-9,]+)</td>[\r\n]+[ ]{8}</tr>' % summary_alpha)
 
-    def get_curr_info(self):
+    def get_curr_info(self) -> str:
+        """
+        Parse table with currency rates from html by regex
+        :return: record data: str
+        """
+
         pattern = self.get_pattern()
 
         data = {
@@ -46,14 +60,25 @@ class Parser:
 
         return json.dumps(data, indent=4, ensure_ascii=False)
 
-    def get_current_date(self):
+    def get_current_date(self) -> str:
+        """
+        Parse date from html by regex
+        :return: current date: str
+        """
+
         pattern = re.compile(r' value="(\d{2}\.\d{2}\.\d{4})" ')
         match = pattern.search(self.text)
 
         return match[1] if match else None
 
     @staticmethod
-    def check_date(date):
+    def check_date(date: str) -> re.Match:
+        """
+        Check date string by regex and return Match object
+        :param date: current date: str
+        :return: match result: Match
+        """
+
         date_pattern = r'\d{2}\.\d{2}\.\d{4}'
 
         return re.fullmatch(pattern=date_pattern, string=str(date))

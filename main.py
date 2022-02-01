@@ -11,6 +11,9 @@ logging.basicConfig(level=logging.INFO)
 
 
 class Data:
+    """
+    Main class with workflow methods
+    """
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
@@ -18,7 +21,7 @@ class Data:
 
         return cls.instance
 
-    def __init__(self, currencies=None, date=None):
+    def __init__(self, currencies: list = None, date: str = None):
         self.base_path = os.path.relpath(os.path.expanduser('../Currencies/curr_base.html'))
         self.currencies = currencies
 
@@ -30,7 +33,12 @@ class Data:
 
         self.date = date
 
-    def get_curr_from_file(self):
+    def get_curr_from_file(self) -> str:
+        """
+        Get currency data from html file
+        :return: html code of page: str
+        """
+
         if not os.path.exists(self.base_path):
             raise FileNotFoundError(f'Currency HTML file "{self.base_path}" does not exist')
 
@@ -41,6 +49,11 @@ class Data:
 
 
 def app():
+    """
+    Main application loop. Runs menu
+    :return: None
+    """
+
     context = Context(prec=PREC, rounding=ROUND_HALF_EVEN)
     setcontext(context)
 
@@ -53,6 +66,11 @@ def app():
 
 
 def main():
+    """
+    Application entry point
+    :return: None
+    """
+
     try:
         app()
 
