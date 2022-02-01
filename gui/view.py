@@ -75,7 +75,7 @@ class View:
         """
         Get rate data from cache
         :param target_date: target date: str
-        :return: currency rate: int
+        :return: currency rate: int, Decimal
         """
 
         record = self.get_data(target_date=target_date)
