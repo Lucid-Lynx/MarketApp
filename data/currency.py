@@ -1,4 +1,3 @@
-import tkinter.tix
 from decimal import Decimal
 from utility.config import DEFAULT_BASE_CURRENCY
 
