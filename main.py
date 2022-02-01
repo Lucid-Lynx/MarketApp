@@ -21,7 +21,7 @@ class Data:
 
         return cls.instance
 
-    def __init__(self, currencies: list = None, date: str = None):
+    def __init__(self, currencies: str = None, date: str = None):
         self.base_path = os.path.relpath(os.path.expanduser('../Currencies/curr_base.html'))
         self.currencies = currencies
 
