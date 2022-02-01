@@ -32,7 +32,7 @@ class Parser:
     def get_date_pattern() -> str:
         """
         Get regex pattern for date
-        :return: date pattern: str
+        :return: record pattern: str
         """
 
         return r'\d{2}\.\d{2}\.\d{4}'
@@ -68,7 +68,7 @@ class Parser:
     def get_curr_info(self) -> dict:
         """
         Parse table with currency rates from html by regex
-        :return: record data: str
+        :return: record data: dict
         """
 
         pattern = re.compile(self.get_record_pattern())
