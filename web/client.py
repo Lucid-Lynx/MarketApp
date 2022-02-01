@@ -9,6 +9,9 @@ logging.basicConfig(level=logging.INFO)
 
 
 class Client:
+    """
+    Web client, based on requests
+    """
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, 'instance'):
