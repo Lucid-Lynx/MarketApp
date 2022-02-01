@@ -101,7 +101,7 @@ class Parser:
         return match[1] if match else None
 
     @staticmethod
-    def check_date(date) -> re.Match:
+    def check_date(date: str) -> re.Match:
         """
         Check date string by regex and return Match object
         :param date: current date: str
