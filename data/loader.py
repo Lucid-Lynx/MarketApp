@@ -39,7 +39,7 @@ class Loader:
     def run(self):
         """
         Run loader
-        :return: None
+        :return: object
         """
 
         logging.info('Start background process')
