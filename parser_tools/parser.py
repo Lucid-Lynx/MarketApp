@@ -106,7 +106,7 @@ class Parser:
     def check_date(date: str) -> re.Match:
         """
         Check date string by regex and return Match object
-        :param date: current date: date
+        :param date: current date: str
         :return: match result: Match
         """
 
