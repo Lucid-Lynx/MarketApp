@@ -63,6 +63,7 @@ class View:
         :param target_date: target date: str
         :return: text response: str
         """
+
         if self.mode == 'Remote':
             resp = Client(date=target_date).get_curr_base()
         else:
