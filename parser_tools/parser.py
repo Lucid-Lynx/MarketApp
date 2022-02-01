@@ -32,7 +32,7 @@ class Parser:
     def get_date_pattern() -> str:
         """
         Get regex pattern for date
-        :return: record pattern: str
+        :return: date pattern: str
         """
 
         return r'\d{2}\.\d{2}\.\d{4}'
