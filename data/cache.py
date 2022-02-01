@@ -75,7 +75,7 @@ class Cache:
         """
         Sorter by date
         :param record: record: Record
-        :return: date: str
+        :return: date: date
         """
 
         return datetime.strptime(record.current_date, DATE_FORMAT)
