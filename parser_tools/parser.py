@@ -68,7 +68,7 @@ class Parser:
     def get_curr_info(self) -> dict:
         """
         Parse table with currency rates from html by regex
-        :return: record pattern: dict
+        :return: record data: dict
         """
 
         pattern = re.compile(self.get_record_pattern())
@@ -93,7 +93,7 @@ class Parser:
     def get_current_date(self) -> str:
         """
         Parse date from html by regex
-        :return: record pattern: str
+        :return: current date: str
         """
 
         # pattern = re.compile(r' value="(\d{2}\.\d{2}\.\d{4})" ')
@@ -107,7 +107,7 @@ class Parser:
         """
         Check date string by regex and return Match object
         :param date: current date: date
-        :return: Match
+        :return: match result: Match
         """
 
         date_pattern = Parser.get_date_pattern()
