@@ -5,8 +5,13 @@ from .currency import Currency
 
 
 class Record:
+    """
+    Class for cache record
+    """
 
-    def __init__(self, base_currency=DEFAULT_BASE_CURRENCY, data=None, current_date=date.today().strftime(DATE_FORMAT)):
+    def __init__(
+            self, base_currency: str = DEFAULT_BASE_CURRENCY, data: str = None,
+            current_date: str = date.today().strftime(DATE_FORMAT)):
         self.base_currency = base_currency
 
         parsed_data = Parser(text=data).get_curr_info() if data else None
