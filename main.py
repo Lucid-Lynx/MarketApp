@@ -3,7 +3,7 @@ import sys
 import logging
 
 from datetime import date
-from decimal import setcontext, Context, ROUND_HALF_EVEN
+from decimal import setcontext, Context, ROUND_HALF_EVEN, Decimal
 from web.client import Client
 from utility.config import PREC, DEFAULT_BASE_CURRENCY, DATE_FORMAT
 from data.record import Record
@@ -13,17 +13,25 @@ logging.basicConfig(level=logging.INFO)
 
 
 class Workflow:
+    """
+    Main class with workflow methods
+    """
 
-    def __init__(self, target_cur=DEFAULT_BASE_CURRENCY,  mode='Remote'):
+    def __init__(self, target_cur: str = DEFAULT_BASE_CURRENCY,  mode: str = 'Remote'):
         self.__base_cur = DEFAULT_BASE_CURRENCY
         self.target_cur = target_cur
         self.mode = mode
 
     @property
-    def base_cur(self):
+    def base_cur(self) -> str:
         return self.__base_cur
 
-    def get_data(self, target_date=date.today().strftime(DATE_FORMAT)):
+    def get_data(self, target_date: str = date.today().strftime(DATE_FORMAT)) -> Record:
+        """
+        Get record from cache by date
+        :param target_date: target date for data to store: str
+        :return: new record: Record
+        """
 
         return Record(data=self.load_rates(target_date=target_date), current_date=target_date) \
             if self.mode == 'Remote' else \
@@ -31,10 +39,22 @@ class Workflow:
 
     @staticmethod
     @run_in_background
-    def load_rates(target_date=date.today().strftime(DATE_FORMAT)):
+    def load_rates(target_date: str = date.today().strftime(DATE_FORMAT)) -> str:
+        """
+        Load new data with rates from remote source or file
+        :param target_date: target date: str
+        :return: text response: str
+        """
+
         return Client(date=target_date).get_curr_base()
 
-    def get_rate(self, target_date=date.today().strftime(DATE_FORMAT)):
+    def get_rate(self, target_date: str = date.today().strftime(DATE_FORMAT)) -> (int, Decimal):
+        """
+        Get rate data from cache
+        :param target_date: target date: str
+        :return: currency rate: int, Decimal
+        """
+
         record = self.get_data(target_date=target_date)
 
         if not record:
@@ -46,6 +66,11 @@ class Workflow:
 
 
 def app():
+    """
+    Main application loop. Runs menu
+    :return: None
+    """
+
     print('Choose currency or skip:')
     currency = input().strip()
 
@@ -71,6 +96,11 @@ def app():
 
 
 def main():
+    """
+    Application entry point
+    :return: None
+    """
+
     context = Context(prec=PREC, rounding=ROUND_HALF_EVEN)
     setcontext(context)
 
