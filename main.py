@@ -22,6 +22,11 @@ def app():
 
 '''
 def app():
+    """
+    Main application loop. Runs menu
+    :return: None
+    """
+
     print('Choose currencies or skip:')
     currencies = input()
     print('Choose mode: file or remote:')
