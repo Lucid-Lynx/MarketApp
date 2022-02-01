@@ -8,7 +8,7 @@ class Parser:
     Regex parser
     """
 
-    def __init__(self, text, currencies: str = None):
+    def __init__(self, text: str, currencies: str = None):
         self.text = text
         self.currencies = currencies.split(',') if currencies else []
 
