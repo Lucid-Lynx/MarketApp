@@ -38,9 +38,9 @@ class Parser:
 
     def get_curr_info(self) -> str:
         """
-       Parse table with currency rates from html by regex
-       :return: record data: str
-       """
+        Parse table with currency rates from html by regex
+        :return: record data: str
+        """
 
         pattern = self.get_pattern()
 
@@ -72,7 +72,7 @@ class Parser:
         return match[1] if match else None
 
     @staticmethod
-    def check_date(date: str):
+    def check_date(date: str) -> re.Match:
         """
         Check date string by regex and return Match object
         :param date: current date: date
