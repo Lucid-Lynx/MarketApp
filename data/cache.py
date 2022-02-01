@@ -71,7 +71,7 @@ class Cache:
         self.data.sort(key=self.__sorter)
 
     @staticmethod
-    def __sorter(record: Record):
+    def __sorter(record: Record) -> date:
         """
         Sorter by date
         :param record: record: Record
