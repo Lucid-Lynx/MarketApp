@@ -51,7 +51,7 @@ class Panel(wx.Panel):
         self.choice_target_cur.Bind(wx.EVT_CHOICE, self._on_choice_currency)
         self.choice_target_cur.SetSelection(0)
 
-        self.button_clean = wx.Button(self, label='Clean store', pos=(10, 475))
+        self.button_clean = wx.Button(self, label='Clean cache', pos=(10, 475))
         self.button_clean.Bind(wx.EVT_BUTTON, self.__on_button_clean)
 
     def _collect_data(self):
